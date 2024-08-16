@@ -125,7 +125,7 @@
 
 # **************************************************************************************************************************
 import streamlit as st
-from google.generativeai import configure, generativeai
+from google.generativeai import GenerativeModel
 from youtube_transcript_api import YouTubeTranscriptApi
 import requests
 from bs4 import BeautifulSoup
@@ -174,9 +174,10 @@ def extract_website_text(website_url):
 # Function to generate summary using Google Generative AI
 def generate_summary(content_text, prompt, api_key):
     try:
-        configure(api_key=api_key)
-        response = generativeai.complete(prompt + content_text, model="gemini-pro")
-        return response.generations[0].text
+        # Assuming the correct way to configure and use GenerativeModel
+        model = GenerativeModel(api_key)
+        response = model.generate(prompt + content_text)
+        return response.text
     except Exception as e:
         st.error(f"Error generating summary: {e}")
         return None
