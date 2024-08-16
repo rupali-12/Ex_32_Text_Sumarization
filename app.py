@@ -6,7 +6,7 @@ import requests
 from bs4 import BeautifulSoup
 
 # Streamlit page configuration
-st.set_page_config(page_title="Content Summarizer", page_icon="📝")
+st.set_page_config(page_title="Content Summarizer from YT or Website", page_icon="📝")
 
 # Function to extract transcript from YouTube
 def extract_transcript_details(youtube_video_url):
