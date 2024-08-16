@@ -6,4 +6,4 @@
 
 # Deployed Link
 
-[DEPLOYED_LINK](https://ex32textsumarization-3rl34wracoidpmovrelcpo.streamlit.app/)
+[DEPLOYED_LINK](https://ex32textsumarization-jrjpkbmdfwojwpfwozqxyx.streamlit.app/)
