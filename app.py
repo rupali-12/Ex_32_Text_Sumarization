@@ -125,7 +125,7 @@
 
 # **************************************************************************************************************************
 import streamlit as st
-from google.generativeai import GenerativeAI
+import openai
 from youtube_transcript_api import YouTubeTranscriptApi
 import requests
 from bs4 import BeautifulSoup
@@ -171,14 +171,16 @@ def extract_website_text(website_url):
         st.error(f"Error fetching website content: {e}")
         return None
 
-# Function to generate summary using Google Generative AI
+# Function to generate summary using OpenAI
 def generate_summary(content_text, prompt, api_key):
+    openai.api_key = api_key
     try:
-        # Initialize GenerativeAI with the API key
-        generative_ai = GenerativeAI(api_key=api_key)
-        # Assuming 'generate_text' is the method to use
-        response = generative_ai.generate_text(prompt + content_text, model="gemini-pro")
-        return response["text"]  # Adjust if the response structure is different
+        response = openai.Completion.create(
+            engine="text-davinci-003",  # or any other engine of your choice
+            prompt=prompt + content_text,
+            max_tokens=150
+        )
+        return response.choices[0].text.strip()
     except Exception as e:
         st.error(f"Error generating summary: {e}")
         return None
@@ -187,7 +189,7 @@ def generate_summary(content_text, prompt, api_key):
 st.title("Content Summarizer")
 
 # API Key input
-api_key = st.text_input("Enter your Google API Key:", type="password")
+api_key = st.text_input("Enter your OpenAI API Key:", type="password")
 
 # Option to choose between YouTube and Website
 option = st.selectbox("Choose content type:", ["YouTube Video", "Website"])
