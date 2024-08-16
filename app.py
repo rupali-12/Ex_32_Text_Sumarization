@@ -171,16 +171,19 @@ def extract_website_text(website_url):
         st.error(f"Error fetching website content: {e}")
         return None
 
-# Function to generate summary using OpenAI
+# Function to generate summary using OpenAI's Chat Completion
 def generate_summary(content_text, prompt, api_key):
     openai.api_key = api_key
     try:
-        response = openai.Completion.create(
-            engine="text-davinci-003",  # or any other engine of your choice
-            prompt=prompt + content_text,
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",  # or "gpt-4" if you have access
+            messages=[
+                {"role": "system", "content": "You are a helpful assistant."},
+                {"role": "user", "content": prompt + content_text}
+            ],
             max_tokens=150
         )
-        return response.choices[0].text.strip()
+        return response.choices[0].message['content'].strip()
     except Exception as e:
         st.error(f"Error generating summary: {e}")
         return None
